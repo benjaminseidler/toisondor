@@ -231,8 +231,11 @@ function startRally() {
   showScreen('screen-map');
 
   if (!map) {
-    initMap();
-    startGPS();
+    // Wait one frame so the map container has computed dimensions before Leaflet initializes
+    requestAnimationFrame(() => {
+      initMap();
+      startGPS();
+    });
   }
   updateProgressBar();
 }
