@@ -399,7 +399,7 @@ html, body {
 /* ── TOAST ───────────────────────────────────────── */
 .toast {
   position: fixed;
-  bottom: 100px;
+  top: 90px;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0,0,0,0.75);
@@ -412,6 +412,8 @@ html, body {
   opacity: 0;
   transition: opacity 0.3s;
   white-space: nowrap;
+  max-width: 90vw;
+  text-align: center;
 }
 .toast.show { opacity: 1; }
 

@@ -106,7 +106,7 @@ const STATIONS = [
     name: 'Ziel: Rezeption',
     emoji: '🎯',
     color: '#FF6B6B',
-    position: [43.2393, 6.6685],
+    position: [43.2394, 6.6687],
     task: '🎉 IHR HABT ES GESCHAFFT! 🎉\nGeht zur Rezeption und holt euren Stempel oder erzählt den Erwachsenen von euren Abenteuern!',
     hint: 'Ihr seid echte Camping-Entdecker!',
     type: 'finish'
