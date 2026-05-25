@@ -1,0 +1,5 @@
+.DS_Store
+*.log
+node_modules/
+img/campsite-plan.png
+

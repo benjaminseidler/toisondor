@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karten-Kalibrierung – Toison d'Or</title>
+  <link rel="stylesheet" href="css/leaflet.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: sans-serif; background: #1a1a2e; color: #eee; height: 100vh; display: flex; flex-direction: column; }
+    h1 { padding: 12px 16px; background: #16213e; font-size: 1.1rem; }
+    h1 span { color: #FFD93D; }
+    .main { display: flex; flex: 1; gap: 0; overflow: hidden; }
+    #map { flex: 1; height: 100%; }
+    .panel { width: 320px; background: #16213e; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+    label { font-size: 0.8rem; color: #aaa; display: block; margin-bottom: 2px; }
+    input[type=range] { width: 100%; }
+    input[type=number] { width: 100%; background: #0f3460; border: 1px solid #444; color: white; padding: 6px 8px; border-radius: 6px; font-size: 0.9rem; }
+    .coord-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .section { background: #0f3460; border-radius: 10px; padding: 12px; }
+    .section h3 { font-size: 0.9rem; color: #FFD93D; margin-bottom: 8px; }
+    button { background: #FFD93D; color: #1a1a2e; border: none; border-radius: 8px; padding: 10px; font-weight: bold; cursor: pointer; font-size: 0.9rem; width: 100%; }
+    button:hover { background: #ffc500; }
+    .output { background: #000; border-radius: 8px; padding: 10px; font-family: monospace; font-size: 0.78rem; color: #6BCB77; white-space: pre-wrap; word-break: break-all; }
+    .info { font-size: 0.8rem; color: #aaa; line-height: 1.4; }
+    @media (max-width: 700px) { .main { flex-direction: column; } .panel { width: 100%; height: 220px; } }
+  </style>
+</head>
+<body>
+<h1>🗺️ Karten-Kalibrierung – <span>Toison d'Or</span></h1>
+<div class="main">
+  <div id="map"></div>
+  <div class="panel">
+
+    <div class="section">
+      <h3>📐 Plan-Overlay Grenzen</h3>
+      <p class="info">Passe die GPS-Grenzen an, bis der Plan mit dem OSM-Satellitenbild übereinstimmt.</p>
+    </div>
+
+    <div class="section">
+      <h3>Transparenz des Plans</h3>
+      <label>Deckkraft: <span id="opacity-val">92%</span></label>
+      <input type="range" id="opacity" min="0" max="100" value="92">
+    </div>
+
+    <div class="section">
+      <h3>SW-Ecke (Süd-West)</h3>
+      <div class="coord-row">
+        <div>
+          <label>Breitengrad (Süd)</label>
+          <input type="number" id="sw-lat" step="0.0001" value="43.2355">
+        </div>
+        <div>
+          <label>Längengrad (West)</label>
+          <input type="number" id="sw-lng" step="0.0001" value="6.6590">
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>NO-Ecke (Nord-Ost)</h3>
+      <div class="coord-row">
+        <div>
+          <label>Breitengrad (Nord)</label>
+          <input type="number" id="ne-lat" step="0.0001" value="43.2413">
+        </div>
+        <div>
+          <label>Längengrad (Ost)</label>
+          <input type="number" id="ne-lng" step="0.0001" value="6.6745">
+        </div>
+      </div>
+    </div>
+
+    <button id="btn-apply">▶ Aktualisieren</button>
+    <button id="btn-export">📋 Werte kopieren</button>
+
+    <div class="section">
+      <h3>Für config.js:</h3>
+      <div class="output" id="output">Klicke "Werte kopieren"</div>
+    </div>
+
+    <div class="section">
+      <h3>📌 Klick-Koordinaten</h3>
+      <p class="info">Klicke auf die Karte, um Koordinaten zu sehen (hilfreich zum Platzieren von Stationen).</p>
+      <div class="output" id="click-coords">–</div>
+    </div>
+
+    <div class="section">
+      <h3>ℹ️ GPS-Referenz (Plan)</h3>
+      <p class="info">43°14'14"N / 6°39'40"E<br>= 43.23722°N, 6.66111°E<br>(westliche Strandseite)</p>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/leaflet.js"></script>
+<script>
+const map = L.map('map').setView([43.2384, 6.6668], 17);
+
+// Satellite-style OSM
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap',
+  maxZoom: 19
+}).addTo(map);
+
+let overlay = null;
+
+function getValues() {
+  return {
+    swLat: parseFloat(document.getElementById('sw-lat').value),
+    swLng: parseFloat(document.getElementById('sw-lng').value),
+    neLat: parseFloat(document.getElementById('ne-lat').value),
+    neLng: parseFloat(document.getElementById('ne-lng').value),
+    opacity: parseInt(document.getElementById('opacity').value) / 100
+  };
+}
+
+function applyOverlay() {
+  const v = getValues();
+  if (overlay) { map.removeLayer(overlay); overlay = null; }
+  const bounds = [[v.swLat, v.swLng], [v.neLat, v.neLng]];
+  overlay = L.imageOverlay('img/campsite-map.png', bounds, {
+    opacity: v.opacity,
+    interactive: false
+  }).addTo(map);
+  map.fitBounds(bounds);
+}
+
+function exportValues() {
+  const v = getValues();
+  const code =
+`const CAMPSITE_BOUNDS = [
+  [${v.swLat}, ${v.swLng}],
+  [${v.neLat}, ${v.neLng}]
+];`;
+  document.getElementById('output').textContent = code;
+  navigator.clipboard?.writeText(code).then(() => {
+    document.getElementById('btn-export').textContent = '✓ Kopiert!';
+    setTimeout(() => document.getElementById('btn-export').textContent = '📋 Werte kopieren', 2000);
+  });
+}
+
+document.getElementById('btn-apply').addEventListener('click', applyOverlay);
+document.getElementById('btn-export').addEventListener('click', exportValues);
+document.getElementById('opacity').addEventListener('input', function() {
+  document.getElementById('opacity-val').textContent = this.value + '%';
+  if (overlay) overlay.setOpacity(this.value / 100);
+});
+
+map.on('click', e => {
+  document.getElementById('click-coords').textContent =
+    `Lat: ${e.latlng.lat.toFixed(6)}\nLng: ${e.latlng.lng.toFixed(6)}`;
+});
+
+// Initial load
+applyOverlay();
+</script>
+</body>
+</html>

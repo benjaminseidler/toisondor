@@ -1,0 +1,435 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --coral: #FF6B6B;
+  --yellow: #FFD93D;
+  --green: #6BCB77;
+  --blue: #4D96FF;
+  --purple: #9B59B6;
+  --bg: #FFFBF0;
+  --text: #2D3436;
+  --radius: 20px;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ── SCREENS ─────────────────────────────────────── */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.screen.active { display: flex; }
+
+/* ── START SCREEN ──────────────────────────────────── */
+#screen-start {
+  background: linear-gradient(160deg, #FFD93D 0%, #FF6B6B 50%, #4D96FF 100%);
+  gap: 24px;
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.start-logo {
+  font-size: 88px;
+  animation: bounce 2s infinite;
+  line-height: 1;
+}
+
+.start-title {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 2.4rem;
+  color: white;
+  text-shadow: 0 3px 0 rgba(0,0,0,0.15);
+  line-height: 1.1;
+}
+
+.start-subtitle {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.9);
+  font-weight: 600;
+}
+
+.btn-start {
+  background: white;
+  color: var(--coral);
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1.8rem;
+  padding: 18px 48px;
+  border: none;
+  border-radius: 60px;
+  cursor: pointer;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.15);
+  transition: transform 0.1s, box-shadow 0.1s;
+  min-height: 72px;
+}
+.btn-start:active {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 rgba(0,0,0,0.15);
+}
+
+/* ── MAP SCREEN ────────────────────────────────────── */
+#screen-map {
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0;
+  background: #e8f4f8;
+}
+
+#map {
+  flex: 1;
+  width: 100%;
+}
+
+.map-header {
+  width: 100%;
+  background: var(--coral);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.map-header h1 {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1.3rem;
+  color: white;
+}
+
+.progress-bar-wrap {
+  width: 100%;
+  background: var(--coral);
+  padding: 8px 16px 10px;
+  z-index: 10;
+}
+
+.progress-label {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.9);
+  font-weight: 700;
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progress-track {
+  height: 12px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--yellow);
+  border-radius: 10px;
+  transition: width 0.5s cubic-bezier(.34,1.56,.64,1);
+}
+
+.btn-gps {
+  position: absolute;
+  bottom: 100px;
+  right: 16px;
+  z-index: 1000;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s;
+}
+.btn-gps:active { transform: scale(0.9); }
+
+/* ── STATION BOTTOM SHEET ────────────────────────── */
+#station-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 28px 28px 0 0;
+  box-shadow: 0 -4px 30px rgba(0,0,0,0.18);
+  padding: 16px 24px 32px;
+  z-index: 2000;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(.34,1.2,.64,1);
+  max-height: 75vh;
+  overflow-y: auto;
+  display: none;
+}
+#station-sheet.open {
+  display: block;
+  transform: translateY(0);
+}
+
+.sheet-handle {
+  width: 44px;
+  height: 5px;
+  background: #ddd;
+  border-radius: 3px;
+  margin: 0 auto 16px;
+}
+
+.station-emoji {
+  font-size: 56px;
+  text-align: center;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.station-name {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1.7rem;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.task-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+  white-space: pre-line;
+}
+
+.station-number-badge {
+  display: inline-block;
+  background: var(--coral);
+  color: white;
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 0.9rem;
+  padding: 2px 12px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+
+.btn-hint {
+  width: 100%;
+  background: transparent;
+  border: 2.5px dashed #ccc;
+  border-radius: 14px;
+  padding: 10px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  color: #888;
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: all 0.2s;
+}
+.btn-hint.revealed {
+  border-style: solid;
+  border-color: var(--yellow);
+  color: var(--text);
+  background: #fffbdd;
+}
+
+.btn-done {
+  width: 100%;
+  background: var(--green);
+  color: white;
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1.5rem;
+  padding: 18px;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  box-shadow: 0 5px 0 #4a9959;
+  transition: transform 0.1s, box-shadow 0.1s;
+  min-height: 64px;
+}
+.btn-done:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #4a9959;
+}
+.btn-done.already-done {
+  background: #aaa;
+  box-shadow: 0 5px 0 #888;
+}
+.btn-done.finish-btn {
+  background: var(--coral);
+  box-shadow: 0 5px 0 #c94f4f;
+}
+
+.btn-close-sheet {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── FINISH SCREEN ──────────────────────────────── */
+#screen-finish {
+  background: linear-gradient(160deg, #6BCB77 0%, #4D96FF 100%);
+  gap: 20px;
+  padding: 32px 24px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.finish-emoji {
+  font-size: 96px;
+  animation: bounce 1s infinite;
+}
+
+.finish-title {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 2.6rem;
+  color: white;
+  text-shadow: 0 3px 0 rgba(0,0,0,0.15);
+}
+
+.finish-stars {
+  font-size: 2.2rem;
+  letter-spacing: 4px;
+}
+
+.finish-text {
+  font-size: 1.15rem;
+  color: rgba(255,255,255,0.95);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.btn-restart {
+  background: white;
+  color: var(--green);
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1.3rem;
+  padding: 16px 40px;
+  border: none;
+  border-radius: 60px;
+  cursor: pointer;
+  box-shadow: 0 5px 0 rgba(0,0,0,0.15);
+  min-height: 60px;
+}
+
+/* ── CUSTOM LEAFLET MARKERS ──────────────────────── */
+.station-marker {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1.1rem;
+  color: white;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.station-marker:hover { transform: scale(1.15); }
+.station-marker.done {
+  background: #6BCB77 !important;
+  border-color: white;
+}
+.station-marker.done::after {
+  content: '✓';
+  font-size: 1.2rem;
+}
+
+/* GPS pulse marker */
+.gps-marker {
+  width: 18px;
+  height: 18px;
+  background: #4D96FF;
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(77,150,255,0.6);
+  animation: gps-pulse 2s infinite;
+}
+
+@keyframes gps-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(77,150,255,0.6); }
+  70%  { box-shadow: 0 0 0 14px rgba(77,150,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(77,150,255,0); }
+}
+
+/* ── STAR ANIMATION ──────────────────────────────── */
+.star-burst {
+  position: fixed;
+  font-size: 3rem;
+  pointer-events: none;
+  z-index: 9999;
+  animation: star-fly 1s ease-out forwards;
+}
+@keyframes star-fly {
+  0%   { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-120px) scale(2); opacity: 0; }
+}
+
+/* ── TOAST ───────────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.75);
+  color: white;
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  z-index: 9000;
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; }
+
+/* ── CONFETTI CANVAS ─────────────────────────────── */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 8000;
+}
+
+/* ── UTILS ───────────────────────────────────────── */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.leaflet-container {
+  background: #c8e6f5;
+  font-family: 'Nunito', sans-serif;
+}
