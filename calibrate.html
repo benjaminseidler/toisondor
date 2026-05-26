@@ -48,11 +48,11 @@
       <div class="coord-row">
         <div>
           <label>Breitengrad (Süd)</label>
-          <input type="number" id="sw-lat" step="0.0001" value="43.2355">
+          <input type="number" id="sw-lat" step="0.00001" value="43.2355">
         </div>
         <div>
           <label>Längengrad (West)</label>
-          <input type="number" id="sw-lng" step="0.0001" value="6.6590">
+          <input type="number" id="sw-lng" step="0.00001" value="6.6590">
         </div>
       </div>
     </div>
@@ -62,11 +62,11 @@
       <div class="coord-row">
         <div>
           <label>Breitengrad (Nord)</label>
-          <input type="number" id="ne-lat" step="0.0001" value="43.2413">
+          <input type="number" id="ne-lat" step="0.00001" value="43.2413">
         </div>
         <div>
           <label>Längengrad (Ost)</label>
-          <input type="number" id="ne-lng" step="0.0001" value="6.6745">
+          <input type="number" id="ne-lng" step="0.00001" value="6.6745">
         </div>
       </div>
     </div>
@@ -94,8 +94,17 @@
 </div>
 
 <script src="js/leaflet.js"></script>
+<script src="js/config.js"></script>
 <script>
-const map = L.map('map').setView([43.2384, 6.6668], 17);
+// Load initial bounds from config.js
+const initSW = CAMPSITE_BOUNDS[0];
+const initNE = CAMPSITE_BOUNDS[1];
+document.getElementById('sw-lat').value = initSW[0];
+document.getElementById('sw-lng').value = initSW[1];
+document.getElementById('ne-lat').value = initNE[0];
+document.getElementById('ne-lng').value = initNE[1];
+
+const map = L.map('map').setView(CAMPSITE_CENTER, 17);
 
 // Satellite-style OSM
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

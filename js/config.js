@@ -56,12 +56,12 @@ const STATIONS = [
   },
   {
     id: 5,
-    name: 'Café Flora',
-    emoji: '☕',
+    name: 'Fête Foraine',
+    emoji: '🎡',
     color: '#FFD93D',
-    position: [43.2374, 6.6614],
-    task: 'Wie viele Stühle stehen draußen vor dem Café Flora? Zählt sie alle!',
-    hint: 'Schaut auch um die Ecke, vielleicht stehen noch mehr da!',
+    position: [43.2369, 6.6597],
+    task: 'Findet die Fête Foraine (kleine Kirmes)! Zählt: wie viele verschiedene Spiele oder Fahrgeschäfte gibt es?',
+    hint: 'Die Fête Foraine ist im westlichen Teil des Campingplatzes!',
     type: 'count'
   },
   {
@@ -96,13 +96,13 @@ const STATIONS = [
   },
   {
     id: 9,
-    name: 'Spa',
-    emoji: '💆',
+    name: 'Strandeingang',
+    emoji: '🏖️',
     color: '#9B59B6',
-    position: [43.2376, 6.6621],
-    task: 'Wie viele Sonnenliegen stehen vor dem Spa & Bien-Être? Zählt sie! 🌞',
-    hint: 'Zählt leise und geht niemanden beim Entspannen stören!',
-    type: 'count'
+    position: [43.2354, 6.6603],
+    task: 'Lauft bis ganz an den Strand! Sammelt zusammen 5 verschiedene Dinge: eine Muschel, einen Stein, eine Feder… was findet ihr noch? 🌊',
+    hint: 'Der Strand (Plage de Pampelonne) ist am südlichsten Rand des Campingplatzes!',
+    type: 'find'
   },
   {
     id: 10,
