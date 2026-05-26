@@ -2,7 +2,9 @@ let map, planOverlay, gpsMarker, gpsWatchId;
 const stationMarkers = {};
 
 function initMap() {
-  const maxBounds = L.latLngBounds(CAMPSITE_BOUNDS);
+  // bearing:90 rotates viewport corners outside the geographic bounds;
+  // padding compensates so the user cannot pan off the plan image.
+  const maxBounds = L.latLngBounds(CAMPSITE_BOUNDS).pad(0.4);
 
   map = L.map('map', {
     zoomControl: false,
