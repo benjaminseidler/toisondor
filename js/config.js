@@ -7,8 +7,8 @@
 // Bounds cover ~333m N-S × 671m E-W; aspect 2.027 matches (Δlon*cos(lat))/Δlat.
 // Fine-tune with calibrate.html on-site (calibrate is north-up, no bearing).
 const CAMPSITE_BOUNDS = [
-  [43.2357, 6.6570],
-  [43.2387, 6.6653]
+  [43.2365, 6.6588],
+  [43.23834, 6.66397]
 ];
 
 const CAMPSITE_CENTER = [43.23720, 6.66115];
