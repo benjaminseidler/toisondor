@@ -106,9 +106,8 @@ document.getElementById('ne-lng').value = initNE[1];
 
 const map = L.map('map').setView(CAMPSITE_CENTER, 17);
 
-// Satellite-style OSM
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap',
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles &copy; Esri',
   maxZoom: 19
 }).addTo(map);
 

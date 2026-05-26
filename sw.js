@@ -1,4 +1,4 @@
-const CACHE = 'rally-v2';
+const CACHE = 'rally-v3';
 const APP_ASSETS = [
   './',
   './index.html',
@@ -33,7 +33,7 @@ self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
 
   // Map tiles: network first, cache fallback
-  if (url.hostname.endsWith('tile.openstreetmap.org')) {
+  if (url.hostname.endsWith('arcgisonline.com')) {
     e.respondWith(
       fetch(e.request)
         .then(r => { const c = r.clone(); caches.open(CACHE).then(cache => cache.put(e.request, c)); return r; })
