@@ -2,18 +2,15 @@ let map, planOverlay, gpsMarker, gpsWatchId;
 const stationMarkers = {};
 
 function initMap() {
-  // Limit panning to the campsite area (with a little breathing room)
-  const maxBounds = L.latLngBounds(CAMPSITE_BOUNDS).pad(0.05);
+  const maxBounds = L.latLngBounds(CAMPSITE_BOUNDS);
 
   map = L.map('map', {
     zoomControl: false,
-    attributionControl: true,
+    attributionControl: false,
     minZoom: 17,
     maxZoom: 19,
     maxBounds: maxBounds,
     maxBoundsViscosity: 1.0,
-    // leaflet-rotate: plan image is north-up; rotate the on-screen view so the
-    // beach (east) appears at the bottom, matching the printed plan.
     rotate: true,
     bearing: MAP_BEARING,
     rotateControl: false,
@@ -21,14 +18,9 @@ function initMap() {
     shiftKeyRotate: false
   }).setView(CAMPSITE_CENTER, CAMPSITE_ZOOM);
 
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'Tiles &copy; Esri',
-    maxZoom: 19
-  }).addTo(map);
-
   // Official campsite plan overlay (north-up; view rotated via bearing)
   planOverlay = L.imageOverlay(PLAN_IMAGE, CAMPSITE_BOUNDS, {
-    opacity: 0.92,
+    opacity: 1.0,
     interactive: false,
     zIndex: 200
   }).addTo(map);

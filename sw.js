@@ -1,4 +1,4 @@
-const CACHE = 'rally-v4';
+const CACHE = 'rally-v5';
 const APP_ASSETS = [
   './',
   './index.html',
@@ -30,19 +30,6 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  const url = new URL(e.request.url);
-
-  // Map tiles: network first, cache fallback
-  if (url.hostname.endsWith('arcgisonline.com')) {
-    e.respondWith(
-      fetch(e.request)
-        .then(r => { const c = r.clone(); caches.open(CACHE).then(cache => cache.put(e.request, c)); return r; })
-        .catch(() => caches.match(e.request))
-    );
-    return;
-  }
-
-  // Everything else: cache first
   e.respondWith(
     caches.match(e.request).then(r => r || fetch(e.request))
   );
