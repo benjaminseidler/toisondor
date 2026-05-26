@@ -2,11 +2,23 @@ let map, planOverlay, gpsMarker, gpsWatchId;
 const stationMarkers = {};
 
 function initMap() {
+  // Limit panning to the campsite area (with a little breathing room)
+  const maxBounds = L.latLngBounds(CAMPSITE_BOUNDS).pad(0.05);
+
   map = L.map('map', {
     zoomControl: false,
     attributionControl: true,
-    minZoom: 15,
-    maxZoom: 19
+    minZoom: 17,
+    maxZoom: 19,
+    maxBounds: maxBounds,
+    maxBoundsViscosity: 1.0,
+    // leaflet-rotate: plan image is north-up; rotate the on-screen view so the
+    // beach (east) appears at the bottom, matching the printed plan.
+    rotate: true,
+    bearing: MAP_BEARING,
+    rotateControl: false,
+    touchRotate: false,
+    shiftKeyRotate: false
   }).setView(CAMPSITE_CENTER, CAMPSITE_ZOOM);
 
   // OSM base tiles (visible when zoomed out or plan is transparent)
@@ -15,7 +27,7 @@ function initMap() {
     maxZoom: 19
   }).addTo(map);
 
-  // Official campsite plan overlay
+  // Official campsite plan overlay (north-up; view rotated via bearing)
   planOverlay = L.imageOverlay(PLAN_IMAGE, CAMPSITE_BOUNDS, {
     opacity: 0.92,
     interactive: false,
