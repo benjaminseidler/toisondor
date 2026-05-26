@@ -1,4 +1,4 @@
-const CACHE = 'rally-v3';
+const CACHE = 'rally-v4';
 const APP_ASSETS = [
   './',
   './index.html',
@@ -10,7 +10,7 @@ const APP_ASSETS = [
   './js/app.js',
   './js/leaflet.js',
   './js/leaflet-rotate.js',
-  './img/campsite-map.png',
+  './img/campsite-map.jpg',
   './img/icon-192.png',
   './img/icon-512.png'
 ];

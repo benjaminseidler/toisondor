@@ -1,14 +1,14 @@
 // Campsite map bounds: [[south, west], [north, east]]
 // GPS reference from official plan: 43°14'14"N / 6°39'40"E = 43.23722N, 6.66111E
-// Image (img/campsite-map.png) is 2230x1100px, rotated 90° CCW from the original
+// Image (img/campsite-map.jpg) is 3308x2363px, rotated 90° CCW from the original
 // PDF plan so it is NORTH-UP: the plan's north arrow pointed right, beach (Plage de
-// Pampelonne) is to the EAST. North-up means the overlay aligns with OSM tiles.
+// Pampelonne) is to the EAST. No crop – full official plan used.
 // MAP_BEARING then rotates the on-screen view so the beach appears at the bottom.
-// Bounds cover ~333m N-S × 671m E-W; aspect 2.027 matches (Δlon*cos(lat))/Δlat.
-// Fine-tune with calibrate.html on-site (calibrate is north-up, no bearing).
+// Bounds derived from on-site calibration of the cropped sub-region, then
+// extrapolated to the full image dimensions.
 const CAMPSITE_BOUNDS = [
-  [43.2365, 6.6588],
-  [43.23834, 6.66397]
+  [43.23523, 6.65688],
+  [43.23918, 6.66455]
 ];
 
 const CAMPSITE_CENTER = [43.23720, 6.66115];
@@ -16,7 +16,7 @@ const CAMPSITE_ZOOM = 17;
 // Screen rotation (degrees). Plan is north-up; beach is east. Rotating the view
 // puts east (beach) at the bottom, matching the printed plan's orientation.
 const MAP_BEARING = 90;
-const PLAN_IMAGE = 'img/campsite-map.png';
+const PLAN_IMAGE = 'img/campsite-map.jpg';
 
 // Station positions derived from pixel positions in plan image.
 // Adjust on-site with GPS if needed.

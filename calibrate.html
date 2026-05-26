@@ -48,11 +48,11 @@
       <div class="coord-row">
         <div>
           <label>Breitengrad (Süd)</label>
-          <input type="number" id="sw-lat" step="0.00001" value="43.2355">
+          <input type="number" id="sw-lat" step="0.00001" value="43.23523">
         </div>
         <div>
           <label>Längengrad (West)</label>
-          <input type="number" id="sw-lng" step="0.00001" value="6.6590">
+          <input type="number" id="sw-lng" step="0.00001" value="6.65688">
         </div>
       </div>
     </div>
@@ -62,11 +62,11 @@
       <div class="coord-row">
         <div>
           <label>Breitengrad (Nord)</label>
-          <input type="number" id="ne-lat" step="0.00001" value="43.2413">
+          <input type="number" id="ne-lat" step="0.00001" value="43.23918">
         </div>
         <div>
           <label>Längengrad (Ost)</label>
-          <input type="number" id="ne-lng" step="0.00001" value="6.6745">
+          <input type="number" id="ne-lng" step="0.00001" value="6.66455">
         </div>
       </div>
     </div>
@@ -127,7 +127,7 @@ function applyOverlay() {
   const v = getValues();
   if (overlay) { map.removeLayer(overlay); overlay = null; }
   const bounds = [[v.swLat, v.swLng], [v.neLat, v.neLng]];
-  overlay = L.imageOverlay('img/campsite-map.png', bounds, {
+  overlay = L.imageOverlay('img/campsite-map.jpg', bounds, {
     opacity: v.opacity,
     interactive: false
   }).addTo(map);
