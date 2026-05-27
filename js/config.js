@@ -26,7 +26,7 @@ const STATIONS = [
     name: 'Rezeption',
     emoji: '🏕️',
     color: '#FF6B6B',
-    position: [43.237762, 6.660102],
+    position: [43.237344, 6.660632],
     task: "Wie heißt unser Campingplatz? Buchstabiert laut zusammen:\nT – O – I – S – O – N D – ' – O – R !",
     hint: 'Schaut auf das große Schild am Eingang!',
     type: 'question'
@@ -36,7 +36,7 @@ const STATIONS = [
     name: 'Großer Pool',
     emoji: '🏊',
     color: '#4D96FF',
-    position: [43.237494, 6.660241],
+    position: [43.23735, 6.660262],
     task: 'Zählt alle Schwimmbahnen im großen Pool!\n(Die Trennleinen im Wasser)',
     hint: 'Schaut vom Rand aus – zählt die Leinen von links nach rechts.',
     type: 'count'
@@ -46,7 +46,7 @@ const STATIONS = [
     name: 'Kinderpool',
     emoji: '💦',
     color: '#4D96FF',
-    position: [43.237346, 6.660244],
+    position: [43.237164, 6.660343],
     task: 'Alle mitmachen! Springt 5× auf einem Bein!\nErst auf dem linken, dann auf dem rechten. 🦵',
     hint: 'Haltet euch gegenseitig fest, wenn ihr wackelt!',
     type: 'move'
@@ -56,7 +56,7 @@ const STATIONS = [
     name: 'Spielplatz',
     emoji: '🎠',
     color: '#6BCB77',
-    position: [43.237342, 6.66062],
+    position: [43.237439, 6.660855],
     task: 'Klettert auf das höchste Gerät auf dem Spielplatz und winkt allen zu! 👋',
     hint: 'Vorsicht beim Klettern – helft euch gegenseitig!',
     type: 'move'
@@ -66,7 +66,7 @@ const STATIONS = [
     name: 'Fête Foraine',
     emoji: '🎡',
     color: '#FFD93D',
-    position: [43.23717, 6.660344],
+    position: [43.238066, 6.660793],
     task: 'Findet die Fête Foraine (kleine Kirmes)! Zählt: wie viele verschiedene Spiele oder Fahrgeschäfte gibt es?',
     hint: 'Die Fête Foraine ist im westlichen Teil des Campingplatzes!',
     type: 'count'
@@ -76,7 +76,7 @@ const STATIONS = [
     name: 'Épicerie',
     emoji: '🛒',
     color: '#FF6B6B',
-    position: [43.237606, 6.660284],
+    position: [43.238106, 6.660545],
     task: 'Findet etwas ROTES im Eingangsbereich oder Schaufenster der Épicerie! 🔴\nWas habt ihr gefunden?',
     hint: 'Schaut genau hin – vielleicht ist es eine Frucht, ein Schild oder eine Verpackung!',
     type: 'find'
@@ -86,7 +86,7 @@ const STATIONS = [
     name: 'Beach Sport',
     emoji: '🏐',
     color: '#6BCB77',
-    position: [43.238079, 6.660769],
+    position: [43.238032, 6.660299],
     task: 'Schafft ihr zusammen 10 Pässe beim Beach-Volleyball ohne den Ball fallen zu lassen? 🏐\nOder findet die Pétanque-Kugeln!',
     hint: 'Ihr könnt auch einfach 10× Ball prellen – Hauptsache zusammen!',
     type: 'move'
@@ -96,7 +96,7 @@ const STATIONS = [
     name: 'Restaurant Playamigos',
     emoji: '🍕',
     color: '#FFD93D',
-    position: [43.237811, 6.66052],
+    position: [43.238342, 6.660734],
     task: 'Schaut auf die Speisekarte oder Tafel beim Restaurant Playamigos.\nNennt 2 Gerichte, die es heute gibt! 🍽️',
     hint: 'Die Karte hängt meistens am Eingang oder draußen an einer Tafel.',
     type: 'question'
@@ -106,7 +106,7 @@ const STATIONS = [
     name: 'Strandeingang',
     emoji: '🏖️',
     color: '#9B59B6',
-    position: [43.236115, 6.662765],
+    position: [43.237648, 6.660971],
     task: 'Lauft bis ganz an den Strand! Sammelt zusammen 5 verschiedene Dinge: eine Muschel, einen Stein, eine Feder… was findet ihr noch? 🌊',
     hint: 'Der Strand (Plage de Pampelonne) ist ganz unten auf der Karte, am Meer!',
     type: 'find'
@@ -116,7 +116,7 @@ const STATIONS = [
     name: 'Ziel: Rezeption',
     emoji: '🎯',
     color: '#FF6B6B',
-    position: [43.237795, 6.658412],
+    position: [43.237121, 6.660574],
     task: '🎉 IHR HABT ES GESCHAFFT! 🎉\nGeht zur Rezeption und holt euren Stempel oder erzählt den Erwachsenen von euren Abenteuern!',
     hint: 'Ihr seid echte Camping-Entdecker!',
     type: 'finish'
@@ -126,7 +126,7 @@ const STATIONS = [
     name: 'Station 11',
     emoji: '⭐',
     color: '#FF6B6B',
-    position: [43.23720, 6.66115],
+    position: [43.236978, 6.66062],
     task: 'Aufgabe folgt…',
     hint: '',
     type: 'question'
@@ -136,7 +136,7 @@ const STATIONS = [
     name: 'Station 12',
     emoji: '⭐',
     color: '#4D96FF',
-    position: [43.23720, 6.66115],
+    position: [43.236186, 6.661007],
     task: 'Aufgabe folgt…',
     hint: '',
     type: 'question'
@@ -146,7 +146,7 @@ const STATIONS = [
     name: 'Station 13',
     emoji: '⭐',
     color: '#6BCB77',
-    position: [43.23720, 6.66115],
+    position: [43.236655, 6.662228],
     task: 'Aufgabe folgt…',
     hint: '',
     type: 'question'
@@ -156,7 +156,7 @@ const STATIONS = [
     name: 'Station 14',
     emoji: '⭐',
     color: '#FFD93D',
-    position: [43.23720, 6.66115],
+    position: [43.237077, 6.662893],
     task: 'Aufgabe folgt…',
     hint: '',
     type: 'question'
@@ -166,7 +166,7 @@ const STATIONS = [
     name: 'Station 15',
     emoji: '⭐',
     color: '#9B59B6',
-    position: [43.23720, 6.66115],
+    position: [43.237581, 6.662893],
     task: 'Aufgabe folgt…',
     hint: '',
     type: 'question'
@@ -176,7 +176,7 @@ const STATIONS = [
     name: 'Station 16',
     emoji: '⭐',
     color: '#FF6B6B',
-    position: [43.23720, 6.66115],
+    position: [43.237265, 6.662285],
     task: 'Aufgabe folgt…',
     hint: '',
     type: 'question'
@@ -186,7 +186,7 @@ const STATIONS = [
     name: 'Station 17',
     emoji: '⭐',
     color: '#4D96FF',
-    position: [43.23720, 6.66115],
+    position: [43.237211, 6.660793],
     task: 'Aufgabe folgt…',
     hint: '',
     type: 'question'
@@ -196,7 +196,7 @@ const STATIONS = [
     name: 'Station 18',
     emoji: '⭐',
     color: '#6BCB77',
-    position: [43.23720, 6.66115],
+    position: [43.237586, 6.660176],
     task: 'Aufgabe folgt…',
     hint: '',
     type: 'question'
@@ -206,7 +206,7 @@ const STATIONS = [
     name: 'Station 19',
     emoji: '⭐',
     color: '#FFD93D',
-    position: [43.23720, 6.66115],
+    position: [43.238221, 6.659611],
     task: 'Aufgabe folgt…',
     hint: '',
     type: 'question'
@@ -216,7 +216,7 @@ const STATIONS = [
     name: 'Station 20',
     emoji: '⭐',
     color: '#9B59B6',
-    position: [43.23720, 6.66115],
+    position: [43.237837, 6.658363],
     task: 'Aufgabe folgt…',
     hint: '',
     type: 'question'
