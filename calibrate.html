@@ -8,86 +8,102 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: sans-serif; background: #1a1a2e; color: #eee; height: 100vh; display: flex; flex-direction: column; }
-    h1 { padding: 12px 16px; background: #16213e; font-size: 1.1rem; }
+    h1 { padding: 10px 16px; background: #16213e; font-size: 1rem; flex-shrink: 0; }
     h1 span { color: #FFD93D; }
-    .main { display: flex; flex: 1; gap: 0; overflow: hidden; }
+    .tabs { display: flex; background: #16213e; border-bottom: 2px solid #0f3460; flex-shrink: 0; }
+    .tab { padding: 8px 18px; cursor: pointer; font-size: 0.85rem; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+    .tab.active { color: #FFD93D; border-bottom-color: #FFD93D; }
+    .main { display: flex; flex: 1; overflow: hidden; }
     #map { flex: 1; height: 100%; }
-    .panel { width: 320px; background: #16213e; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+    .panel { width: 320px; background: #16213e; padding: 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+    .pane { display: none; flex-direction: column; gap: 10px; }
+    .pane.active { display: flex; }
     label { font-size: 0.8rem; color: #aaa; display: block; margin-bottom: 2px; }
     input[type=range] { width: 100%; }
     input[type=number] { width: 100%; background: #0f3460; border: 1px solid #444; color: white; padding: 6px 8px; border-radius: 6px; font-size: 0.9rem; }
+    select { width: 100%; background: #0f3460; border: 1px solid #444; color: white; padding: 8px; border-radius: 6px; font-size: 0.9rem; }
     .coord-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .section { background: #0f3460; border-radius: 10px; padding: 12px; }
     .section h3 { font-size: 0.9rem; color: #FFD93D; margin-bottom: 8px; }
-    button { background: #FFD93D; color: #1a1a2e; border: none; border-radius: 8px; padding: 10px; font-weight: bold; cursor: pointer; font-size: 0.9rem; width: 100%; }
+    button { background: #FFD93D; color: #1a1a2e; border: none; border-radius: 8px; padding: 9px; font-weight: bold; cursor: pointer; font-size: 0.85rem; width: 100%; }
     button:hover { background: #ffc500; }
-    .output { background: #000; border-radius: 8px; padding: 10px; font-family: monospace; font-size: 0.78rem; color: #6BCB77; white-space: pre-wrap; word-break: break-all; }
+    button.secondary { background: #4D96FF; color: white; }
+    button.secondary:hover { background: #3a7fd4; }
+    .output { background: #000; border-radius: 8px; padding: 10px; font-family: monospace; font-size: 0.75rem; color: #6BCB77; white-space: pre-wrap; word-break: break-all; max-height: 200px; overflow-y: auto; }
     .info { font-size: 0.8rem; color: #aaa; line-height: 1.4; }
-    @media (max-width: 700px) { .main { flex-direction: column; } .panel { width: 100%; height: 220px; } }
+    .status { font-size: 0.85rem; color: #6BCB77; background: #0a2010; border-radius: 8px; padding: 8px 10px; min-height: 36px; }
+    .station-row { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; }
+    .station-row:hover { background: #1a3a5c; }
+    .station-row.active { background: #1a3a5c; outline: 2px solid #FFD93D; }
+    .station-dot { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: bold; color: white; flex-shrink: 0; }
+    .station-placed { margin-left: auto; font-size: 0.7rem; color: #6BCB77; }
+    @media (max-width: 700px) { .main { flex-direction: column; } .panel { width: 100%; height: 260px; } }
   </style>
 </head>
 <body>
 <h1>🗺️ Karten-Kalibrierung – <span>Toison d'Or</span></h1>
+<div class="tabs">
+  <div class="tab active" data-tab="stations">📍 Stationen</div>
+  <div class="tab" data-tab="bounds">📐 Bounds</div>
+</div>
 <div class="main">
   <div id="map"></div>
   <div class="panel">
 
-    <div class="section">
-      <h3>📐 Plan-Overlay Grenzen</h3>
-      <p class="info">Passe die GPS-Grenzen an, bis der Plan mit dem OSM-Satellitenbild übereinstimmt.</p>
-    </div>
-
-    <div class="section">
-      <h3>Transparenz des Plans</h3>
-      <label>Deckkraft: <span id="opacity-val">92%</span></label>
-      <input type="range" id="opacity" min="0" max="100" value="92">
-    </div>
-
-    <div class="section">
-      <h3>SW-Ecke (Süd-West)</h3>
-      <div class="coord-row">
-        <div>
-          <label>Breitengrad (Süd)</label>
-          <input type="number" id="sw-lat" step="0.00001" value="43.23523">
-        </div>
-        <div>
-          <label>Längengrad (West)</label>
-          <input type="number" id="sw-lng" step="0.00001" value="6.65688">
-        </div>
+    <!-- STATIONS PANE -->
+    <div class="pane active" id="pane-stations">
+      <div class="section">
+        <h3>📍 Stationen platzieren</h3>
+        <p class="info">Station auswählen → auf die richtige Stelle im Plan tippen → automatisch weiter.</p>
+      </div>
+      <div class="status" id="station-status">Station auswählen oder auf Marker klicken</div>
+      <div id="station-list"></div>
+      <button id="btn-export-stations">📋 Positionen kopieren</button>
+      <div class="section">
+        <h3>config.js – Positionen:</h3>
+        <div class="output" id="output-stations">Klicke "Positionen kopieren"</div>
       </div>
     </div>
 
-    <div class="section">
-      <h3>NO-Ecke (Nord-Ost)</h3>
-      <div class="coord-row">
-        <div>
-          <label>Breitengrad (Nord)</label>
-          <input type="number" id="ne-lat" step="0.00001" value="43.23918">
-        </div>
-        <div>
-          <label>Längengrad (Ost)</label>
-          <input type="number" id="ne-lng" step="0.00001" value="6.66455">
+    <!-- BOUNDS PANE -->
+    <div class="pane" id="pane-bounds">
+      <div class="section">
+        <h3>📐 Plan-Overlay Grenzen</h3>
+        <p class="info">Passe die GPS-Grenzen an, bis der Plan mit dem Satellitenbild übereinstimmt.</p>
+      </div>
+      <div class="section">
+        <h3>Transparenz</h3>
+        <label>Deckkraft: <span id="opacity-val">75%</span></label>
+        <input type="range" id="opacity" min="0" max="100" value="75">
+      </div>
+      <div class="section">
+        <h3>SW-Ecke (Süd-West)</h3>
+        <div class="coord-row">
+          <div><label>Breitengrad (Süd)</label>
+            <input type="number" id="sw-lat" step="0.00001" value="43.23523"></div>
+          <div><label>Längengrad (West)</label>
+            <input type="number" id="sw-lng" step="0.00001" value="6.65688"></div>
         </div>
       </div>
-    </div>
-
-    <button id="btn-apply">▶ Aktualisieren</button>
-    <button id="btn-export">📋 Werte kopieren</button>
-
-    <div class="section">
-      <h3>Für config.js:</h3>
-      <div class="output" id="output">Klicke "Werte kopieren"</div>
-    </div>
-
-    <div class="section">
-      <h3>📌 Klick-Koordinaten</h3>
-      <p class="info">Klicke auf die Karte, um Koordinaten zu sehen (hilfreich zum Platzieren von Stationen).</p>
-      <div class="output" id="click-coords">–</div>
-    </div>
-
-    <div class="section">
-      <h3>ℹ️ GPS-Referenz (Plan)</h3>
-      <p class="info">43°14'14"N / 6°39'40"E<br>= 43.23722°N, 6.66111°E<br>(westliche Strandseite)</p>
+      <div class="section">
+        <h3>NO-Ecke (Nord-Ost)</h3>
+        <div class="coord-row">
+          <div><label>Breitengrad (Nord)</label>
+            <input type="number" id="ne-lat" step="0.00001" value="43.23918"></div>
+          <div><label>Längengrad (Ost)</label>
+            <input type="number" id="ne-lng" step="0.00001" value="6.66455"></div>
+        </div>
+      </div>
+      <button id="btn-apply">▶ Aktualisieren</button>
+      <button id="btn-export-bounds">📋 Bounds kopieren</button>
+      <div class="section">
+        <h3>Für config.js:</h3>
+        <div class="output" id="output-bounds">Klicke "Bounds kopieren"</div>
+      </div>
+      <div class="section">
+        <h3>ℹ️ GPS-Referenz</h3>
+        <p class="info">43°14'14"N / 6°39'40"E = 43.23722°N, 6.66111°E</p>
+      </div>
     </div>
 
   </div>
@@ -96,7 +112,17 @@
 <script src="js/leaflet.js"></script>
 <script src="js/config.js"></script>
 <script>
-// Load initial bounds from config.js
+// ── Tabs ──────────────────────────────────────────────────────────────────
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('pane-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ── Map ───────────────────────────────────────────────────────────────────
 const initSW = CAMPSITE_BOUNDS[0];
 const initNE = CAMPSITE_BOUNDS[1];
 document.getElementById('sw-lat').value = initSW[0];
@@ -104,16 +130,23 @@ document.getElementById('sw-lng').value = initSW[1];
 document.getElementById('ne-lat').value = initNE[0];
 document.getElementById('ne-lng').value = initNE[1];
 
-const map = L.map('map').setView(CAMPSITE_CENTER, 17);
+const map = L.map('map', { zoomControl: true }).setView(CAMPSITE_CENTER, 17);
 
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-  attribution: 'Tiles &copy; Esri',
-  maxZoom: 19
+  attribution: 'Tiles &copy; Esri', maxZoom: 19
 }).addTo(map);
 
 let overlay = null;
-
-function getValues() {
+function applyOverlay() {
+  const v = getBoundsValues();
+  if (overlay) { map.removeLayer(overlay); overlay = null; }
+  const bounds = [[v.swLat, v.swLng], [v.neLat, v.neLng]];
+  overlay = L.imageOverlay('img/campsite-map.jpg', bounds, {
+    opacity: v.opacity, interactive: false
+  }).addTo(map);
+  map.fitBounds(bounds);
+}
+function getBoundsValues() {
   return {
     swLat: parseFloat(document.getElementById('sw-lat').value),
     swLng: parseFloat(document.getElementById('sw-lng').value),
@@ -122,46 +155,110 @@ function getValues() {
     opacity: parseInt(document.getElementById('opacity').value) / 100
   };
 }
-
-function applyOverlay() {
-  const v = getValues();
-  if (overlay) { map.removeLayer(overlay); overlay = null; }
-  const bounds = [[v.swLat, v.swLng], [v.neLat, v.neLng]];
-  overlay = L.imageOverlay('img/campsite-map.jpg', bounds, {
-    opacity: v.opacity,
-    interactive: false
-  }).addTo(map);
-  map.fitBounds(bounds);
-}
-
-function exportValues() {
-  const v = getValues();
-  const code =
-`const CAMPSITE_BOUNDS = [
-  [${v.swLat}, ${v.swLng}],
-  [${v.neLat}, ${v.neLng}]
-];`;
-  document.getElementById('output').textContent = code;
-  navigator.clipboard?.writeText(code).then(() => {
-    document.getElementById('btn-export').textContent = '✓ Kopiert!';
-    setTimeout(() => document.getElementById('btn-export').textContent = '📋 Werte kopieren', 2000);
-  });
-}
-
 document.getElementById('btn-apply').addEventListener('click', applyOverlay);
-document.getElementById('btn-export').addEventListener('click', exportValues);
 document.getElementById('opacity').addEventListener('input', function() {
   document.getElementById('opacity-val').textContent = this.value + '%';
   if (overlay) overlay.setOpacity(this.value / 100);
 });
+document.getElementById('btn-export-bounds').addEventListener('click', () => {
+  const v = getBoundsValues();
+  const code = `const CAMPSITE_BOUNDS = [\n  [${v.swLat}, ${v.swLng}],\n  [${v.neLat}, ${v.neLng}]\n];`;
+  document.getElementById('output-bounds').textContent = code;
+  navigator.clipboard?.writeText(code).then(() => {
+    document.getElementById('btn-export-bounds').textContent = '✓ Kopiert!';
+    setTimeout(() => document.getElementById('btn-export-bounds').textContent = '📋 Bounds kopieren', 2000);
+  });
+});
+applyOverlay();
+
+// ── Station placement ──────────────────────────────────────────────────────
+const positions = {};
+const leafletMarkers = {};
+let activeStation = null;
+
+STATIONS.forEach(s => { positions[s.id] = [...s.position]; });
+
+function buildStationList() {
+  const list = document.getElementById('station-list');
+  list.innerHTML = '';
+  STATIONS.forEach(s => {
+    const row = document.createElement('div');
+    row.className = 'station-row' + (activeStation === s.id ? ' active' : '');
+    row.dataset.id = s.id;
+    row.innerHTML = `<div class="station-dot" style="background:${s.color}">${s.id}</div>
+      <span>${s.name}</span>
+      <span class="station-placed" id="placed-${s.id}">✓</span>`;
+    row.addEventListener('click', () => activateStation(s.id));
+    list.appendChild(row);
+  });
+}
+
+function activateStation(id) {
+  activeStation = id;
+  const s = STATIONS.find(s => s.id === id);
+  document.getElementById('station-status').textContent = `→ Tippe auf den Plan: "${s.name}"`;
+  buildStationList();
+  renderMarkers();
+}
+
+function renderMarkers() {
+  Object.values(leafletMarkers).forEach(m => map.removeLayer(m));
+  STATIONS.forEach(s => {
+    const isActive = activeStation === s.id;
+    const icon = L.divIcon({
+      className: '',
+      html: `<div style="
+        background:${s.color};color:white;
+        width:${isActive ? 40 : 30}px;height:${isActive ? 40 : 30}px;
+        border-radius:50%;display:flex;align-items:center;justify-content:center;
+        font-weight:bold;font-size:${isActive ? 15 : 12}px;
+        border:${isActive ? '3px solid white' : '2px solid rgba(0,0,0,0.3)'};
+        box-shadow:${isActive ? '0 0 0 3px rgba(255,255,0,0.6)' : 'none'};
+      ">${s.id}</div>`,
+      iconSize: [isActive ? 40 : 30, isActive ? 40 : 30],
+      iconAnchor: [isActive ? 20 : 15, isActive ? 20 : 15]
+    });
+    const m = L.marker(positions[s.id], { icon }).addTo(map);
+    m.on('click', e => { L.DomEvent.stopPropagation(e); activateStation(s.id); });
+    leafletMarkers[s.id] = m;
+  });
+}
 
 map.on('click', e => {
-  document.getElementById('click-coords').textContent =
-    `Lat: ${e.latlng.lat.toFixed(6)}\nLng: ${e.latlng.lng.toFixed(6)}`;
+  if (activeStation !== null) {
+    positions[activeStation] = [
+      parseFloat(e.latlng.lat.toFixed(6)),
+      parseFloat(e.latlng.lng.toFixed(6))
+    ];
+    const ids = STATIONS.map(s => s.id);
+    const idx = ids.indexOf(activeStation);
+    const nextId = idx < ids.length - 1 ? ids[idx + 1] : null;
+    activeStation = nextId;
+    if (nextId) {
+      const next = STATIONS.find(s => s.id === nextId);
+      document.getElementById('station-status').textContent = `✓ Gesetzt! Jetzt: "${next.name}"`;
+    } else {
+      document.getElementById('station-status').textContent = '✅ Alle Stationen platziert! Jetzt exportieren.';
+    }
+    buildStationList();
+    renderMarkers();
+  }
 });
 
-// Initial load
-applyOverlay();
+document.getElementById('btn-export-stations').addEventListener('click', () => {
+  const lines = STATIONS.map(s => {
+    const [lat, lng] = positions[s.id];
+    return `    position: [${lat}, ${lng}],  // ${s.name}`;
+  }).join('\n');
+  document.getElementById('output-stations').textContent = lines;
+  navigator.clipboard?.writeText(lines).then(() => {
+    document.getElementById('btn-export-stations').textContent = '✓ Kopiert!';
+    setTimeout(() => document.getElementById('btn-export-stations').textContent = '📋 Positionen kopieren', 2000);
+  });
+});
+
+buildStationList();
+renderMarkers();
 </script>
 </body>
 </html>
