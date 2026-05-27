@@ -120,5 +120,105 @@ const STATIONS = [
     task: '🎉 IHR HABT ES GESCHAFFT! 🎉\nGeht zur Rezeption und holt euren Stempel oder erzählt den Erwachsenen von euren Abenteuern!',
     hint: 'Ihr seid echte Camping-Entdecker!',
     type: 'finish'
+  },
+  {
+    id: 11,
+    name: 'Station 11',
+    emoji: '⭐',
+    color: '#FF6B6B',
+    position: [43.23720, 6.66115],
+    task: 'Aufgabe folgt…',
+    hint: '',
+    type: 'question'
+  },
+  {
+    id: 12,
+    name: 'Station 12',
+    emoji: '⭐',
+    color: '#4D96FF',
+    position: [43.23720, 6.66115],
+    task: 'Aufgabe folgt…',
+    hint: '',
+    type: 'question'
+  },
+  {
+    id: 13,
+    name: 'Station 13',
+    emoji: '⭐',
+    color: '#6BCB77',
+    position: [43.23720, 6.66115],
+    task: 'Aufgabe folgt…',
+    hint: '',
+    type: 'question'
+  },
+  {
+    id: 14,
+    name: 'Station 14',
+    emoji: '⭐',
+    color: '#FFD93D',
+    position: [43.23720, 6.66115],
+    task: 'Aufgabe folgt…',
+    hint: '',
+    type: 'question'
+  },
+  {
+    id: 15,
+    name: 'Station 15',
+    emoji: '⭐',
+    color: '#9B59B6',
+    position: [43.23720, 6.66115],
+    task: 'Aufgabe folgt…',
+    hint: '',
+    type: 'question'
+  },
+  {
+    id: 16,
+    name: 'Station 16',
+    emoji: '⭐',
+    color: '#FF6B6B',
+    position: [43.23720, 6.66115],
+    task: 'Aufgabe folgt…',
+    hint: '',
+    type: 'question'
+  },
+  {
+    id: 17,
+    name: 'Station 17',
+    emoji: '⭐',
+    color: '#4D96FF',
+    position: [43.23720, 6.66115],
+    task: 'Aufgabe folgt…',
+    hint: '',
+    type: 'question'
+  },
+  {
+    id: 18,
+    name: 'Station 18',
+    emoji: '⭐',
+    color: '#6BCB77',
+    position: [43.23720, 6.66115],
+    task: 'Aufgabe folgt…',
+    hint: '',
+    type: 'question'
+  },
+  {
+    id: 19,
+    name: 'Station 19',
+    emoji: '⭐',
+    color: '#FFD93D',
+    position: [43.23720, 6.66115],
+    task: 'Aufgabe folgt…',
+    hint: '',
+    type: 'question'
+  },
+  {
+    id: 20,
+    name: 'Station 20',
+    emoji: '⭐',
+    color: '#9B59B6',
+    position: [43.23720, 6.66115],
+    task: 'Aufgabe folgt…',
+    hint: '',
+    type: 'question'
   }
 ];
