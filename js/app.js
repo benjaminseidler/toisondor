@@ -41,11 +41,6 @@ function openStation(id) {
   document.getElementById('sheet-name').textContent = station.name;
   document.getElementById('sheet-task').textContent = station.task;
 
-  const hintBtn = document.getElementById('btn-hint');
-  hintBtn.textContent = '💡 Tipp anzeigen';
-  hintBtn.classList.remove('revealed');
-  hintBtn.dataset.hint = station.hint;
-
   const doneBtn = document.getElementById('btn-done');
   if (done) {
     doneBtn.textContent = '✓ Schon erledigt!';
@@ -71,14 +66,6 @@ function closeSheet() {
   sheet.classList.remove('open');
   setTimeout(() => { sheet.style.display = 'none'; }, 350);
   activeStationId = null;
-}
-
-function revealHint() {
-  const btn = document.getElementById('btn-hint');
-  if (!btn.classList.contains('revealed')) {
-    btn.textContent = '💡 ' + btn.dataset.hint;
-    btn.classList.add('revealed');
-  }
 }
 
 function markDone() {
@@ -210,7 +197,6 @@ function setupLongPressReset() {
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-start').addEventListener('click', startRally);
   document.getElementById('btn-gps').addEventListener('click', panToGPS);
-  document.getElementById('btn-hint').addEventListener('click', revealHint);
   document.getElementById('btn-done').addEventListener('click', markDone);
   document.getElementById('btn-close-sheet').addEventListener('click', closeSheet);
   document.getElementById('btn-restart').addEventListener('click', () => {
