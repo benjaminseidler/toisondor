@@ -193,9 +193,30 @@ function setupLongPressReset() {
   logo.addEventListener('mouseup', () => clearTimeout(timer));
 }
 
+// ── FULLSCREEN ────────────────────────────────────────
+function toggleFullscreen() {
+  const el = document.documentElement;
+  if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+    if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+  } else {
+    if (document.exitFullscreen) document.exitFullscreen();
+    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+  }
+}
+
+function syncFullscreenBtn() {
+  const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+  document.getElementById('fs-enter').style.display = isFs ? 'none' : '';
+  document.getElementById('fs-exit').style.display = isFs ? '' : 'none';
+}
+
 // ── INIT ───────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-start').addEventListener('click', startRally);
+  document.getElementById('btn-fullscreen').addEventListener('click', toggleFullscreen);
+  document.addEventListener('fullscreenchange', syncFullscreenBtn);
+  document.addEventListener('webkitfullscreenchange', syncFullscreenBtn);
   document.getElementById('btn-gps').addEventListener('click', panToGPS);
   document.getElementById('btn-done').addEventListener('click', markDone);
   document.getElementById('btn-photo').addEventListener('click', () => {
