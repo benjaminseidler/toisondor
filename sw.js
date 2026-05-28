@@ -1,4 +1,4 @@
-const CACHE = 'rally-v18';
+const CACHE = 'rally-v19';
 const APP_ASSETS = [
   './',
   './index.html',

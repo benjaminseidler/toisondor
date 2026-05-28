@@ -1,17 +1,13 @@
 {
   "name": "Camping Rallye Toison d'Or",
   "short_name": "Rallye",
-  "description": "Schnitzeljagd für Kinder auf dem Camping Toison d'Or",
   "start_url": "/toisondor/",
   "scope": "/toisondor/",
   "display": "standalone",
-  "orientation": "portrait",
-  "theme_color": "#FF6B6B",
   "background_color": "#FFFBF0",
+  "theme_color": "#FF6B6B",
   "icons": [
-    { "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "/toisondor/img/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/toisondor/img/icon-512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }
