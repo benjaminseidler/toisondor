@@ -52,7 +52,7 @@ const STATIONS = [
   },
   {
     id: 4,
-    name: 'Neptunbild',
+    name: 'Neonbild',
     emoji: '🔱',
     color: '#FF6B6B',
     position: [43.237439, 6.660855],
