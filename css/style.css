@@ -97,6 +97,53 @@ html, body {
 }
 .btn-install:active { background: rgba(255,255,255,0.35); }
 
+/* ── RULES SCREEN ─────────────────────────────────── */
+#screen-rules {
+  background: linear-gradient(160deg, #FFD93D 0%, #FF6B6B 60%, #4D96FF 100%);
+  gap: 0;
+  padding: 40px 28px 32px;
+  align-items: center;
+}
+
+.rules-title {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 2rem;
+  color: white;
+  text-shadow: 0 3px 0 rgba(0,0,0,0.12);
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.rules-list {
+  list-style: none;
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+.rules-list li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 16px;
+  padding: 14px 18px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+.rules-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
 /* ── MAP SCREEN ────────────────────────────────────── */
 #screen-map {
   flex-direction: column;
