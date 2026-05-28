@@ -56,7 +56,7 @@ const STATIONS = [
     emoji: '🔱',
     color: '#FF6B6B',
     position: [43.237439, 6.660855],
-    task: 'Was ist alles auf dem Neptunbild abgebildet?\nNennt so viele Dinge wie möglich!',
+    task: 'Welches Tier ist auf dem Neonbild abgebildet?',
     type: 'question'
   },
   {
@@ -110,7 +110,7 @@ const STATIONS = [
     emoji: '🎠',
     color: '#4D96FF',
     position: [43.237121, 6.660574],
-    task: 'Wie viele Fahrzeuge / Sitze hat das Karussell?\nZählt genau!',
+    task: 'Wie viele Fahrzeuge / Tiere hat das Karussell?\nZählt genau!',
     type: 'count'
   },
   {
