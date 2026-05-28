@@ -1,0 +1,76 @@
+# CLAUDE.md – Camping Rallye Toison d'Or
+
+## Projektüberblick
+
+Kein Build-Step. Reines HTML5 + CSS3 + Vanilla JS, gehostet auf GitHub Pages.
+
+**Live-URL:** https://benjaminseidler.github.io/toisondor/
+
+## Dateistruktur
+
+```
+index.html          Single-Page-App (alle Screens als divs)
+manifest.json       PWA-Manifest
+sw.js               Service Worker – Cache-Version bei Änderungen bumpen!
+calibrate.html      Hilfstool zum Einmessen von Stationskoordinaten (nicht produktiv)
+css/style.css       Alle Styles
+js/config.js        Stationen + Karten-Bounds – hier macht der User Änderungen
+js/map.js           Leaflet-Init, imageOverlay, GPS-Marker, Stations-Marker
+js/app.js           Screen-Management, Spielerlogik, Event-Handler
+img/campsite-map.jpg  Offizieller Campingplan 2026 (90° gegen UZS gedreht, Norden oben)
+```
+
+## Architektur-Entscheidungen
+
+- **Kein Framework** – absichtlich, für einfaches Hosting ohne Build-Pipeline
+- **Leaflet imageOverlay** statt echten Kartenkacheln: Der offizielle Campingplan wird als Bild über die Karte gelegt (`CAMPSITE_BOUNDS` in config.js). `MAP_BEARING = 90` dreht die Ansicht so, dass der Strand unten ist (wie auf dem gedruckten Plan).
+- **localStorage** für Fortschritt: Key `rally_progress`, Format `{ completedStations: [1,3,…], startedAt: timestamp }`. Reset: 3 Sekunden auf das Logo drücken.
+- **Service Worker** (`sw.js`): Cache-first. **Wichtig:** Bei jeder inhaltlichen Änderung die Cache-Version (`rally-vN`) bumpen, sonst sehen Nutzer alte Stände.
+
+## Karten-Koordinaten
+
+```js
+// config.js
+const CAMPSITE_BOUNDS = [[43.23523, 6.65688], [43.23918, 6.66455]];
+const CAMPSITE_CENTER = [43.23720, 6.66115];
+const MAP_BEARING = 90;  // Strand kommt nach unten
+```
+
+GPS-Referenz aus offiziellem Plan: 43°14'14"N / 6°39'40"E.  
+Bounds wurden vor Ort kalibriert (Pool-Bereich und Strandeingang als Referenzpunkte).
+
+## Stationen (config.js)
+
+20 Stationen. Typen: `question`, `count`, `move`, `find`, `finish`.  
+Farben nach Typ: question `#FF6B6B`, count `#4D96FF`, move `#6BCB77`, find `#FFD93D`, finish `#9B59B6`.
+
+Station 20 (`type: 'finish'`) zeigt den Ziel-Screen und Konfetti.
+
+## Design-System
+
+- Fonts: `Fredoka One` (Headlines), `Nunito` (Fließtext) – beide via Google Fonts CDN
+- Farben: Coral `#FF6B6B`, Gelb `#FFD93D`, Grün `#6BCB77`, Blau `#4D96FF`, Lila `#9B59B6`
+- Touch-Targets: min. 48px
+- Zielgruppe: Kinder 6–8 Jahre → große Schrift, große Buttons, viele Emojis
+
+## Typische Aufgaben
+
+**Stationstext ändern:** `js/config.js` → gewünschte Station → `task`-Feld anpassen → SW-Cache bumpen  
+**Neue Station hinzufügen:** Eintrag in `STATIONS`-Array in config.js, dann Marker-Position vor Ort mit `calibrate.html` einmessen  
+**Stationsposition korrigieren:** `calibrate.html` aufrufen → Marker verschieben → Koordinaten in config.js übertragen  
+**Zielscreen-Text:** `index.html` → `#screen-finish`-Div  
+**Styling:** `css/style.css`
+
+## Deployment
+
+Push auf `main` → GitHub Actions (`.github/workflows/deploy.yml`) → GitHub Pages.  
+Cache-Invalidierung: SW-Version in `sw.js` Zeile 1 bumpen (`rally-vN` → `rally-v(N+1)`).  
+Aktuelle Version: `rally-v12`.
+
+## Lokaler Test
+
+```bash
+npx serve .   # oder: python3 -m http.server 8080
+```
+
+GPS-Simulation: Chrome DevTools → Sensors → Location → Koordinate nahe `43.2372, 6.6611` eingeben.
