@@ -151,11 +151,11 @@ const STATIONS = [
   },
   {
     id: 15,
-    name: 'Shallona',
+    name: 'Shellona',
     emoji: '🌴',
     color: '#4D96FF',
     position: [43.237581, 6.662893],
-    task: 'Wie viele Pflanzkübel stehen in der ersten Reihe?\n⭐ Bonus: Welches Lied läuft gerade? 🎵',
+    task: 'Wie viele Sonnenschirme gibt es bei der Shellona?\n⭐ Bonus: Welches Lied läuft gerade? 🎵',
     type: 'count'
   },
   {
