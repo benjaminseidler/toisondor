@@ -196,51 +196,15 @@ function setupLongPressReset() {
 // ── PWA INSTALL ───────────────────────────────────────
 let installPrompt = null;
 
-function setPwaStatus(msg) {
-  const el = document.getElementById('pwa-status');
-  if (el) el.textContent = msg;
-}
-
-// Check SW status after load and report
-window.addEventListener('load', () => {
-  if (!('serviceWorker' in navigator)) {
-    setPwaStatus('⚠ Service Worker nicht unterstützt');
-    return;
-  }
-  navigator.serviceWorker.getRegistration().then(reg => {
-    if (!reg) {
-      setPwaStatus('⚠ SW: nicht registriert');
-    } else if (reg.active) {
-      setPwaStatus('SW aktiv · warte auf Install-Prompt…');
-    } else if (reg.installing) {
-      setPwaStatus('SW installiert sich…');
-      reg.installing.addEventListener('statechange', e => {
-        if (e.target.state === 'activated') setPwaStatus('SW aktiv · warte auf Prompt…');
-        if (e.target.state === 'redundant') setPwaStatus('⚠ SW: redundant/Fehler');
-      });
-    } else {
-      setPwaStatus('SW: ' + (reg.waiting ? 'wartend' : 'unbekannt'));
-    }
-  });
-  // Timeout: if no prompt after 5s, show manual hint
-  setTimeout(() => {
-    if (!installPrompt) {
-      setPwaStatus('Manuell: Chrome-Menü ⋮ → Zum Startbildschirm');
-    }
-  }, 5000);
-});
-
 window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
   installPrompt = e;
   document.getElementById('btn-install').style.display = 'block';
-  setPwaStatus('');
 });
 
 window.addEventListener('appinstalled', () => {
   installPrompt = null;
   document.getElementById('btn-install').style.display = 'none';
-  setPwaStatus('✓ App installiert!');
 });
 
 // ── FULLSCREEN ────────────────────────────────────────
