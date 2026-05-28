@@ -279,6 +279,26 @@ html, body {
   box-shadow: 0 5px 0 #c94f4f;
 }
 
+.btn-photo {
+  width: 100%;
+  background: #4D96FF;
+  color: #fff;
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1.3rem;
+  padding: 16px;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  box-shadow: 0 5px 0 #2a6fcc;
+  transition: transform 0.1s, box-shadow 0.1s;
+  min-height: 56px;
+  margin-bottom: 12px;
+}
+.btn-photo:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #2a6fcc;
+}
+
 .btn-close-sheet {
   position: absolute;
   top: 16px;

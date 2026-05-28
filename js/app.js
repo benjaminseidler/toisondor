@@ -198,6 +198,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-start').addEventListener('click', startRally);
   document.getElementById('btn-gps').addEventListener('click', panToGPS);
   document.getElementById('btn-done').addEventListener('click', markDone);
+  document.getElementById('btn-photo').addEventListener('click', () => {
+    document.getElementById('photo-input').click();
+  });
   document.getElementById('btn-close-sheet').addEventListener('click', closeSheet);
   document.getElementById('btn-restart').addEventListener('click', () => {
     if (confirm('Neue Rallye starten? Alle Fortschritte werden gelöscht.')) resetProgress();
