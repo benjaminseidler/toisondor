@@ -84,6 +84,19 @@ html, body {
   box-shadow: 0 3px 0 rgba(0,0,0,0.15);
 }
 
+.btn-install {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1rem;
+  padding: 12px 28px;
+  border: 2px solid rgba(255,255,255,0.6);
+  border-radius: 60px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-install:active { background: rgba(255,255,255,0.35); }
+
 /* ── MAP SCREEN ────────────────────────────────────── */
 #screen-map {
   flex-direction: column;

@@ -193,6 +193,20 @@ function setupLongPressReset() {
   logo.addEventListener('mouseup', () => clearTimeout(timer));
 }
 
+// ── PWA INSTALL ───────────────────────────────────────
+let installPrompt = null;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  installPrompt = e;
+  document.getElementById('btn-install').style.display = 'block';
+});
+
+window.addEventListener('appinstalled', () => {
+  installPrompt = null;
+  document.getElementById('btn-install').style.display = 'none';
+});
+
 // ── FULLSCREEN ────────────────────────────────────────
 function toggleFullscreen() {
   const el = document.documentElement;
@@ -214,6 +228,15 @@ function syncFullscreenBtn() {
 // ── INIT ───────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-start').addEventListener('click', startRally);
+  document.getElementById('btn-install').addEventListener('click', async () => {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    const { outcome } = await installPrompt.userChoice;
+    if (outcome === 'accepted') {
+      installPrompt = null;
+      document.getElementById('btn-install').style.display = 'none';
+    }
+  });
   document.getElementById('btn-fullscreen').addEventListener('click', toggleFullscreen);
   document.addEventListener('fullscreenchange', syncFullscreenBtn);
   document.addEventListener('webkitfullscreenchange', syncFullscreenBtn);
