@@ -1,9 +1,9 @@
 {
   "name": "Camping Rallye Toison d'Or",
-  "short_name": "Rallye 🏕️",
-  "id": "/toisondor/",
+  "short_name": "Rallye",
   "description": "Schnitzeljagd für Kinder auf dem Camping Toison d'Or",
-  "start_url": "./",
+  "start_url": "/toisondor/",
+  "scope": "/toisondor/",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#FF6B6B",
