@@ -201,6 +201,18 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-photo').addEventListener('click', () => {
     document.getElementById('photo-input').click();
   });
+  document.getElementById('photo-input').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    const a = document.createElement('a');
+    const station = STATIONS.find(s => s.id === activeStationId);
+    a.href = url;
+    a.download = `rallye-station-${activeStationId || 'foto'}-${station ? station.name.replace(/\s+/g, '-') : ''}.jpg`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    e.target.value = '';
+  });
   document.getElementById('btn-close-sheet').addEventListener('click', closeSheet);
   document.getElementById('btn-restart').addEventListener('click', () => {
     if (confirm('Neue Rallye starten? Alle Fortschritte werden gelöscht.')) resetProgress();
