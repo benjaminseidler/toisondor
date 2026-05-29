@@ -10,8 +10,9 @@ Kein Build-Step. Reines HTML5 + CSS3 + Vanilla JS, gehostet auf GitHub Pages.
 
 ```
 index.html          Single-Page-App (alle Screens als divs)
-manifest.json       PWA-Manifest
+manifest.json       PWA-Manifest (minimales Format, absolute Pfade)
 sw.js               Service Worker – Cache-Version bei Änderungen bumpen!
+.nojekyll           Verhindert Jekyll-Verarbeitung durch GitHub Pages
 calibrate.html      Hilfstool zum Einmessen von Stationskoordinaten (nicht produktiv)
 css/style.css       Alle Styles
 js/config.js        Stationen + Karten-Bounds – hier macht der User Änderungen
@@ -20,12 +21,26 @@ js/app.js           Screen-Management, Spielerlogik, Event-Handler
 img/campsite-map.jpg  Offizieller Campingplan 2026 (90° gegen UZS gedreht, Norden oben)
 ```
 
+## Screen-Ablauf
+
+```
+#screen-start → #screen-rules → #screen-map → #screen-finish
+```
+
+- **screen-start:** Startscreen mit Logo, „Los geht's!"-Button, verstecktem PWA-Install-Button
+- **screen-rules:** Sicherheitshinweise (Autos, Straßen, nicht rennen, zusammenbleiben, gemeinsam)
+- **screen-map:** Karte mit Stationen, Fortschrittsbalken, GPS-Button
+- **screen-finish:** Zielscreen mit Konfetti
+
 ## Architektur-Entscheidungen
 
 - **Kein Framework** – absichtlich, für einfaches Hosting ohne Build-Pipeline
 - **Leaflet imageOverlay** statt echten Kartenkacheln: Der offizielle Campingplan wird als Bild über die Karte gelegt (`CAMPSITE_BOUNDS` in config.js). `MAP_BEARING = 90` dreht die Ansicht so, dass der Strand unten ist (wie auf dem gedruckten Plan).
 - **localStorage** für Fortschritt: Key `rally_progress`, Format `{ completedStations: [1,3,…], startedAt: timestamp }`. Reset: 3 Sekunden auf das Logo drücken.
 - **Service Worker** (`sw.js`): Cache-first. **Wichtig:** Bei jeder inhaltlichen Änderung die Cache-Version (`rally-vN`) bumpen, sonst sehen Nutzer alte Stände.
+- **Vollbild-Button** (`#btn-fullscreen`): `position: fixed` oben rechts, auf allen Screens sichtbar. Webkit-Prefix für Safari. Stellt Vollbild nach Foto-Aufnahme automatisch wieder her.
+- **Foto-Button** an jeder Station: Öffnet Kamera via `<input type="file" capture="environment">`, triggert nach Aufnahme automatisch einen Download (Dateiname mit Stationsnummer und -name).
+- **PWA-Install:** `beforeinstallprompt` wird abgefangen; falls Chrome den Prompt feuert, erscheint ein „App installieren"-Button auf dem Startscreen.
 
 ## Karten-Koordinaten
 
@@ -56,6 +71,7 @@ Station 20 (`type: 'finish'`) zeigt den Ziel-Screen und Konfetti.
 ## Typische Aufgaben
 
 **Stationstext ändern:** `js/config.js` → gewünschte Station → `task`-Feld anpassen → SW-Cache bumpen  
+**Hinweistext ändern:** `index.html` → `#screen-rules` → `<li>`-Einträge anpassen  
 **Neue Station hinzufügen:** Eintrag in `STATIONS`-Array in config.js, dann Marker-Position vor Ort mit `calibrate.html` einmessen  
 **Stationsposition korrigieren:** `calibrate.html` aufrufen → Marker verschieben → Koordinaten in config.js übertragen  
 **Zielscreen-Text:** `index.html` → `#screen-finish`-Div  
@@ -65,7 +81,7 @@ Station 20 (`type: 'finish'`) zeigt den Ziel-Screen und Konfetti.
 
 Push auf `main` → GitHub Actions (`.github/workflows/deploy.yml`) → GitHub Pages.  
 Cache-Invalidierung: SW-Version in `sw.js` Zeile 1 bumpen (`rally-vN` → `rally-v(N+1)`).  
-Aktuelle Version: `rally-v12`.
+Aktuelle Version: `rally-v24`.
 
 ## Lokaler Test
 

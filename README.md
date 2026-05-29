@@ -9,9 +9,11 @@ Kindgerechte Schnitzeljagd-Web-App für den Campingplatz [Toison d'Or](https://w
 - Interaktive Karte mit offiziellem Campingplatz-Plan als Overlay
 - 20 nummerierte Stationen mit Aufgaben (zählen, bewegen, finden, beantworten)
 - GPS-Ortung (zeigt eigene Position auf der Karte)
-- Foto-Button an jeder Station (öffnet Kamera direkt)
+- Sicherheitshinweise-Screen vor dem Start
+- Foto-Button an jeder Station – Bild wird automatisch auf das Gerät heruntergeladen
+- Vollbild-Modus (Button oben rechts, auf allen Screens)
 - Fortschritt wird lokal gespeichert (localStorage)
-- PWA: installierbar auf dem Homescreen, funktioniert offline
+- Offline-fähig via Service Worker
 - Reset-Funktion (3 Sekunden auf das Logo drücken)
 
 ## Stationen anpassen
@@ -30,7 +32,8 @@ python3 -m http.server 8080
 
 ## Deployment
 
-Push auf `main` löst automatisch einen GitHub-Pages-Deploy aus (`.github/workflows/deploy.yml`).
+Push auf `main` löst automatisch einen GitHub-Pages-Deploy aus (`.github/workflows/deploy.yml`).  
+Nach Änderungen die Cache-Version in `sw.js` Zeile 1 hochzählen (`rally-vN` → `rally-v(N+1)`).
 
 ## Campingplatz-Plan
 
