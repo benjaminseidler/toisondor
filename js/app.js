@@ -243,7 +243,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('webkitfullscreenchange', syncFullscreenBtn);
   document.getElementById('btn-gps').addEventListener('click', panToGPS);
   document.getElementById('btn-done').addEventListener('click', markDone);
+  let wasFullscreen = false;
   document.getElementById('btn-photo').addEventListener('click', () => {
+    wasFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement);
     document.getElementById('photo-input').click();
   });
   document.getElementById('photo-input').addEventListener('change', e => {
@@ -257,6 +259,11 @@ document.addEventListener('DOMContentLoaded', () => {
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
     e.target.value = '';
+    if (wasFullscreen) {
+      const el = document.documentElement;
+      if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    }
   });
   document.getElementById('btn-close-sheet').addEventListener('click', closeSheet);
   document.getElementById('btn-restart').addEventListener('click', () => {
