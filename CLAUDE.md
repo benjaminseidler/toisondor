@@ -19,7 +19,7 @@ js/config.js        Stationen + Karten-Bounds – hier macht der User Änderunge
 js/map.js           Leaflet-Init, imageOverlay, GPS-Marker, Stations-Marker
 js/app.js           Screen-Management, Spielerlogik, Event-Handler
 img/campsite-map.jpg  Offizieller Campingplan 2026 (90° gegen UZS gedreht, Norden oben)
-img/icon-192.png    PWA-Icon 192×192 (🏖️ auf Coral-Hintergrund)
+img/icon-192.png    PWA-Icon 192×192 (🏖️ auf grünem Hintergrund #6BCB77)
 img/icon-512.png    PWA-Icon 512×512
 ```
 
@@ -85,7 +85,7 @@ Station 20 (`type: 'finish'`) zeigt den Ziel-Screen und Konfetti.
 
 Push auf `main` → GitHub Actions (`.github/workflows/deploy.yml`) → GitHub Pages.  
 Cache-Invalidierung: SW-Version in `sw.js` Zeile 1 bumpen (`rally-vN` → `rally-v(N+1)`).  
-Aktuelle Version: `rally-v28`.
+Aktuelle Version: `rally-v29`.
 
 ## Lokaler Test
 
