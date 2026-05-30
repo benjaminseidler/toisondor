@@ -227,7 +227,8 @@ function syncFullscreenBtn() {
 
 // ── INIT ───────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('btn-start').addEventListener('click', () => showScreen('screen-rules'));
+  document.getElementById('btn-start').addEventListener('click', () => showScreen('screen-intro'));
+  document.getElementById('btn-intro-ok').addEventListener('click', () => showScreen('screen-rules'));
   document.getElementById('btn-rules-ok').addEventListener('click', startRally);
   document.getElementById('btn-install').addEventListener('click', async () => {
     if (!installPrompt) return;
