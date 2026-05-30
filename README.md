@@ -1,4 +1,4 @@
-# Camping Rallye – Toison d'Or
+# Toison d'Or Rallye 🏖️
 
 Kindgerechte Schnitzeljagd-Web-App für den Campingplatz [Toison d'Or](https://www.toison-dor.com/) in Ramatuelle, Frankreich. Läuft komplett im Browser, kein Server nötig.
 
@@ -7,11 +7,11 @@ Kindgerechte Schnitzeljagd-Web-App für den Campingplatz [Toison d'Or](https://w
 ## Features
 
 - Interaktive Karte mit offiziellem Campingplatz-Plan als Overlay
-- 20 nummerierte Stationen mit Aufgaben (zählen, bewegen, finden, beantworten)
+- 20 nummerierte Stationen der Reihe nach mit Aufgaben (zählen, bewegen, finden, beantworten)
 - GPS-Ortung (zeigt eigene Position auf der Karte)
-- Sicherheitshinweise-Screen vor dem Start
+- Erklärungsscreen + Sicherheitshinweise vor dem Start
 - Foto-Button an jeder Station – Bild wird automatisch auf das Gerät heruntergeladen
-- Vollbild-Modus (Button oben rechts, auf allen Screens)
+- Vollbild-Modus (Button oben rechts, auf allen Screens, wird nach Foto wiederhergestellt)
 - Fortschritt wird lokal gespeichert (localStorage)
 - Offline-fähig via Service Worker
 - Reset-Funktion (3 Sekunden auf das Logo drücken)

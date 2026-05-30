@@ -1,4 +1,4 @@
-# CLAUDE.md – Camping Rallye Toison d'Or
+# CLAUDE.md – Toison d'Or Rallye
 
 ## Projektüberblick
 
@@ -19,15 +19,18 @@ js/config.js        Stationen + Karten-Bounds – hier macht der User Änderunge
 js/map.js           Leaflet-Init, imageOverlay, GPS-Marker, Stations-Marker
 js/app.js           Screen-Management, Spielerlogik, Event-Handler
 img/campsite-map.jpg  Offizieller Campingplan 2026 (90° gegen UZS gedreht, Norden oben)
+img/icon-192.png    PWA-Icon 192×192 (🏖️ auf Coral-Hintergrund)
+img/icon-512.png    PWA-Icon 512×512
 ```
 
 ## Screen-Ablauf
 
 ```
-#screen-start → #screen-rules → #screen-map → #screen-finish
+#screen-start → #screen-intro → #screen-rules → #screen-map → #screen-finish
 ```
 
-- **screen-start:** Startscreen mit Logo, „Los geht's!"-Button, verstecktem PWA-Install-Button
+- **screen-start:** Startscreen mit 🏖️-Logo, „Los geht's!"-Button, verstecktem PWA-Install-Button
+- **screen-intro:** Erklärung (3 Schritte: Stationen der Reihe nach, Aufgabe lösen, Foto machen)
 - **screen-rules:** Sicherheitshinweise (Autos, Straßen, nicht rennen, zusammenbleiben, gemeinsam)
 - **screen-map:** Karte mit Stationen, Fortschrittsbalken, GPS-Button
 - **screen-finish:** Zielscreen mit Konfetti
@@ -71,6 +74,7 @@ Station 20 (`type: 'finish'`) zeigt den Ziel-Screen und Konfetti.
 ## Typische Aufgaben
 
 **Stationstext ändern:** `js/config.js` → gewünschte Station → `task`-Feld anpassen → SW-Cache bumpen  
+**Intro-Text ändern:** `index.html` → `#screen-intro` → `.intro-step p`-Elemente anpassen  
 **Hinweistext ändern:** `index.html` → `#screen-rules` → `<li>`-Einträge anpassen  
 **Neue Station hinzufügen:** Eintrag in `STATIONS`-Array in config.js, dann Marker-Position vor Ort mit `calibrate.html` einmessen  
 **Stationsposition korrigieren:** `calibrate.html` aufrufen → Marker verschieben → Koordinaten in config.js übertragen  
@@ -81,7 +85,7 @@ Station 20 (`type: 'finish'`) zeigt den Ziel-Screen und Konfetti.
 
 Push auf `main` → GitHub Actions (`.github/workflows/deploy.yml`) → GitHub Pages.  
 Cache-Invalidierung: SW-Version in `sw.js` Zeile 1 bumpen (`rally-vN` → `rally-v(N+1)`).  
-Aktuelle Version: `rally-v24`.
+Aktuelle Version: `rally-v28`.
 
 ## Lokaler Test
 
