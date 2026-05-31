@@ -215,7 +215,7 @@ html, body {
 
 .map-header {
   width: 100%;
-  background: var(--coral);
+  background: var(--green);
   padding: 10px 16px;
   display: flex;
   align-items: center;
