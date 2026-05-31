@@ -101,7 +101,7 @@ const STATIONS = [
     emoji: '🗝️',
     color: '#FF6B6B',
     position: [43.237648, 6.660971],
-    task: 'Findet die Öffnungszeiten des Concierge!\nWann ist er heute offen?',
+    task: 'Findet die Öffnungszeiten des Concierge!\nWann ist er heute offen?\n⭐ Bonus: Wie heißt er?',
     type: 'question'
   },
   {
@@ -155,7 +155,7 @@ const STATIONS = [
     emoji: '🌴',
     color: '#4D96FF',
     position: [43.237581, 6.662893],
-    task: 'Wie viele Sonnenschirme gibt es bei der Shellona?\n⭐ Bonus: Welches Lied läuft gerade? 🎵',
+    task: 'Wie viele Sonnenschirme gibt es bei Shellona?\n⭐ Bonus: Welches Lied läuft gerade? 🎵',
     type: 'count'
   },
   {
@@ -169,11 +169,11 @@ const STATIONS = [
   },
   {
     id: 17,
-    name: 'Laden',
+    name: 'Läden',
     emoji: '🛒',
     color: '#FF6B6B',
     position: [43.237211, 6.660793],
-    task: 'Wann macht der Laden morgens auf?\nSchaut auf das Schild!',
+    task: 'Wann machen die Läden morgens auf?',
     type: 'question'
   },
   {
@@ -200,7 +200,7 @@ const STATIONS = [
     emoji: '🏆',
     color: '#9B59B6',
     position: [43.237837, 6.658363],
-    task: '🎉 IHR HABT ALLE STATIONEN GEFUNDEN! 🎉\nJetzt gibt es den Preis / Schatz!\nHolt ihn euch ab! 🏆',
+    task: '🎉 IHR HABT ALLE STATIONEN GEFUNDEN! 🎉',
     type: 'finish'
   }
 ];

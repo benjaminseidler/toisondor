@@ -68,7 +68,8 @@ function updateMarker(stationId) {
   if (stationMarkers[stationId]) {
     stationMarkers[stationId].remove();
   }
-  const marker = createMarker(station, true);
+  const done = loadProgress().completedStations.includes(stationId);
+  const marker = createMarker(station, done);
   stationMarkers[stationId] = marker;
   marker.addTo(map);
   marker.on('click', () => openStation(stationId));

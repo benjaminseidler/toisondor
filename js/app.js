@@ -73,7 +73,24 @@ function markDone() {
 
   const progress = loadProgress();
   const done = progress.completedStations.includes(activeStationId);
-  if (done) { closeSheet(); return; }
+
+  if (done) {
+    progress.completedStations = progress.completedStations.filter(id => id !== activeStationId);
+    saveProgress(progress);
+    updateMarker(activeStationId);
+    updateProgressBar();
+    const doneBtn = document.getElementById('btn-done');
+    const station = STATIONS.find(s => s.id === activeStationId);
+    if (station?.type === 'finish') {
+      doneBtn.textContent = '🎉 Ziel erreicht!';
+      doneBtn.classList.remove('already-done');
+      doneBtn.classList.add('finish-btn');
+    } else {
+      doneBtn.textContent = '✅ Aufgabe erledigt!';
+      doneBtn.classList.remove('already-done', 'finish-btn');
+    }
+    return;
+  }
 
   progress.completedStations.push(activeStationId);
   if (!progress.startedAt) progress.startedAt = Date.now();
