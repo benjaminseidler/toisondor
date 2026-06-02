@@ -75,9 +75,9 @@ function markDone() {
   const done = progress.completedStations.includes(activeStationId);
 
   if (done) {
-    progress.completedStations = progress.completedStations.filter(id => id !== activeStationId);
+    progress.completedStations = progress.completedStations.filter(id => id < activeStationId);
     saveProgress(progress);
-    updateMarker(activeStationId);
+    refreshAllMarkers();
     updateProgressBar();
     const doneBtn = document.getElementById('btn-done');
     const station = STATIONS.find(s => s.id === activeStationId);
@@ -96,7 +96,7 @@ function markDone() {
   if (!progress.startedAt) progress.startedAt = Date.now();
   saveProgress(progress);
 
-  updateMarker(activeStationId);
+  refreshAllMarkers();
   updateProgressBar();
   burstStar();
 

@@ -33,16 +33,42 @@ function initMap() {
   addStationMarkers();
 }
 
+function visibleUpTo(completedStations) {
+  for (let i = 0; i < STATIONS.length; i++) {
+    if (!completedStations.includes(STATIONS[i].id)) return STATIONS[i].id;
+  }
+  return STATIONS[STATIONS.length - 1].id;
+}
+
 function addStationMarkers() {
   const progress = loadProgress();
+  const upTo = visibleUpTo(progress.completedStations);
 
-  STATIONS.forEach(station => {
+  STATIONS.filter(s => s.id <= upTo).forEach(station => {
     const done = progress.completedStations.includes(station.id);
     const marker = createMarker(station, done);
     stationMarkers[station.id] = marker;
     marker.addTo(map);
-
     marker.on('click', () => openStation(station.id));
+  });
+}
+
+function refreshAllMarkers() {
+  const progress = loadProgress();
+  const upTo = visibleUpTo(progress.completedStations);
+
+  STATIONS.forEach(station => {
+    if (stationMarkers[station.id]) {
+      stationMarkers[station.id].remove();
+      delete stationMarkers[station.id];
+    }
+    if (station.id <= upTo) {
+      const done = progress.completedStations.includes(station.id);
+      const marker = createMarker(station, done);
+      stationMarkers[station.id] = marker;
+      marker.addTo(map);
+      marker.on('click', () => openStation(station.id));
+    }
   });
 }
 
@@ -62,18 +88,6 @@ function createMarker(station, done) {
   return L.marker(station.position, { icon, zIndexOffset: 500 });
 }
 
-function updateMarker(stationId) {
-  const station = STATIONS.find(s => s.id === stationId);
-  if (!station) return;
-  if (stationMarkers[stationId]) {
-    stationMarkers[stationId].remove();
-  }
-  const done = loadProgress().completedStations.includes(stationId);
-  const marker = createMarker(station, done);
-  stationMarkers[stationId] = marker;
-  marker.addTo(map);
-  marker.on('click', () => openStation(stationId));
-}
 
 function startGPS() {
   if (!navigator.geolocation) {
