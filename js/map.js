@@ -74,7 +74,7 @@ function refreshAllMarkers() {
 
 function createMarker(station, done) {
   const label = done ? '✓' : station.id;
-  const bg = done ? '#6BCB77' : station.color;
+  const bg = done ? '#6BCB77' : '#FF9F43';
   const icon = L.divIcon({
     className: '',
     html: `<div class="station-marker ${done ? 'done' : ''}"
