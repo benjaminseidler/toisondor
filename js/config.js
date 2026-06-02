@@ -53,7 +53,7 @@ const STATIONS = [
   {
     id: 4,
     name: 'Neonbild',
-    emoji: '🔱',
+    emoji: '🖼️',
     color: '#FF6B6B',
     position: [43.237439, 6.660855],
     task: 'Welches Tier ist auf dem Neonbild abgebildet?',
@@ -173,7 +173,7 @@ const STATIONS = [
     emoji: '🛒',
     color: '#FF6B6B',
     position: [43.237211, 6.660793],
-    task: 'Wann machen die Läden morgens auf?',
+    task: 'Wie heißen die drei Läden?',
     type: 'question'
   },
   {
