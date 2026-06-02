@@ -44,6 +44,7 @@ img/icon-512.png    PWA-Icon 512×512
 - **Vollbild-Button** (`#btn-fullscreen`): `position: fixed` oben rechts, auf allen Screens sichtbar. Webkit-Prefix für Safari. Stellt Vollbild nach Foto-Aufnahme automatisch wieder her.
 - **Foto-Button** an jeder Station: Öffnet Kamera via `<input type="file" capture="environment">`, triggert nach Aufnahme automatisch einen Download (Dateiname mit Stationsnummer und -name).
 - **PWA-Install:** `beforeinstallprompt` wird abgefangen; falls Chrome den Prompt feuert, erscheint ein „App installieren"-Button auf dem Startscreen.
+- **Sequentielle Freischaltung:** Immer nur erledigte Stationen + die nächste offene sind auf der Karte sichtbar (`visibleUpTo()` in map.js). Toggle-Rückfall kaskadiert: Station N rückgängig → alle Stationen ≥ N werden aus `completedStations` entfernt und deren Marker verschwinden.
 
 ## Karten-Koordinaten
 
@@ -85,7 +86,7 @@ Station 20 (`type: 'finish'`) zeigt den Ziel-Screen und Konfetti.
 
 Push auf `main` → GitHub Actions (`.github/workflows/deploy.yml`) → GitHub Pages.  
 Cache-Invalidierung: SW-Version in `sw.js` Zeile 1 bumpen (`rally-vN` → `rally-v(N+1)`).  
-Aktuelle Version: `rally-v29`.
+Aktuelle Version: `rally-v33`.
 
 ## Lokaler Test
 
